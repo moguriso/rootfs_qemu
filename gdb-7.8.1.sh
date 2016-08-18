@@ -3,20 +3,16 @@
 set -e
 source ./filetree.env
 
-if [ $# -ne 1 ]; then
-    echo Usage: $0 x.yz
-    exit -1
-fi
+PACKAGE=`basename $0`
+PACKAGE=${PACKAGE%.*}
+PN=${PACKAGE%-*}
+V=${PACKAGE##*-}
 
-VERSION=$1
-shift
-PACKAGE=binutils-${VERSION}
-
-tarball=${PACKAGE}.tar.gz
+tarball=${PACKAGE}.tar.xz
 
 # download
 if [ ! -e ${DOWNLOADS}/${tarball} ]; then
-    wget -nc http://ftpmirror.gnu.org/binutils/${tarball} -P ${DOWNLOADS}
+    wget -nc http://ftpmirror.gnu.org/gdb/${tarball} -P ${DOWNLOADS}
 fi
 
 # extract
@@ -30,12 +26,9 @@ pushd $_
 
 # configure
 ${SOURCES}/${PACKAGE}/configure \
-    --prefix=${HOST_SYSROOT} \
-    --with-sysroot=${HOST_SYSROOT} \
-    --with-lib-path=${HOST_SYSROOT}/lib \
     --target=${TARGET} \
-    --disable-nls \
-    --disable-werror \
+    --prefix=${HOST_SYSROOT} \
+    --with-python=no
     2>&1 | tee configure.log
 
 # make

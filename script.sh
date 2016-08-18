@@ -1,35 +1,41 @@
 #!/bin/sh
 
-# http://www.linuxfromscratch.org/lfs/view/development/chapter05/chapter05.html
+# http://tanehp.ec-net.jp/heppoko-lab/prog/qemu_arm/qemu-arm.html
 
 set -e
 source ./filetree.env
 
-for dir in ${DOWNLOADS} ${SOURCES} ${HOST_BUILD} ${TARGET_BUILD} ${HOST_SYSROOT} ${TARGET_SYSROOT}; do
+for dir in ${DOWNLOADS} ${SOURCES} ${HOST_BUILD} ${TARGET_BUILD} ${HOST_SYSROOT} ${TARGET_SYSROOT} ${IMAGES}; do
     mkdir -p $dir
 done
 case $(uname -m) in
   x86_64) mkdir -v ${HOST_SYSROOT}/lib && ln -sv lib ${HOST_SYSROOT}/lib64 ;;
 esac
 
-# 5.4. Binutils-2.26.1 - Pass 1
-# http://www.linuxfromscratch.org/lfs/view/development/chapter05/binutils-pass1.html
-./binutils.sh 2.26.1
+./binutils-2.25.sh first
 
-# 5.5. GCC-6.1.0 - Pass 1
-# http://www.linuxfromscratch.org/lfs/view/development/chapter05/gcc-pass1.html
-./gcc-initial.sh 6.1.0 mpfr-3.1.4 gmp-6.1.1 mpc-1.0.3
+./gcc-4.9.2.sh first
 
-# 5.6. Linux-4.7 API Headers
-# http://www.linuxfromscratch.org/lfs/view/development/chapter05/linux-headers.html
-./linux-headers.sh 4.7
+./linux-3.18.1.sh header
 
-# 5.7. Glibc-2.24
-# http://www.linuxfromscratch.org/lfs/view/development/chapter05/glibc.html
-./glibc-initial.sh 2.24
+./glibc-2.20.sh
 
-# 5.8. Libstdc++-6.1.0
-# http://www.linuxfromscratch.org/lfs/view/development/chapter05/gcc-libstdc++.html
-./libstdc++-v3.sh 6.1.0
+./gcc-4.9.2.sh second
+
+#./binutils-2.25.sh second
+
+./gcc-4.9.2.sh third
+
+./gdb-7.8.1.sh
+
+./baselayout.sh
+
+./iana-etc-2.30.sh
+
+./busybox-1.22.1.sh
+
+./linux-3.18.1.sh kernel
+
+./mkrootfs.sh
 
 cd $root
