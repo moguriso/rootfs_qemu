@@ -27,14 +27,8 @@ pushd $_
 # configure
 ${SOURCES}/${PACKAGE}/configure \
     --prefix=${HOST_SYSROOT}/${TARGET} \
-    --host=${TARGET} \
-    --build=${MACHTYPE} \
-    --disable-profile \
-    --enable-kernel=3.18.1 \
-    --with-headers=${HOST_SYSROOT}/${TARGET}/include \
-    libc_cv_forced_unwind=yes \
-    libc_cv_ctors_header=yes \
-    libc_cv_c_cleanup=yes
+    --enable-cxx \
+    --disable-static \
     2>&1 | tee configure.log
 
 # make

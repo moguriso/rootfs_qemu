@@ -3,14 +3,6 @@
 set -e
 source ./filetree.env
 
-case $1 in
-first|second)
-    ;;
-*)
-    echo Usage: $0 first or second
-    exit -1
-esac
-
 PACKAGE=`basename $0`
 PACKAGE=${PACKAGE%.*}
 PN=${PACKAGE%-*}
@@ -29,34 +21,20 @@ if [ ! -e ${SOURCES}/${PACKAGE} ]; then
 fi
 
 # build dir
-mkdir -p ${HOST_BUILD}/${PACKAGE}/${1}
+mkdir -p ${HOST_BUILD}/${PACKAGE}
 pushd $_
 
 # configure
-case $1 in
-first)
-    ${SOURCES}/${PACKAGE}/configure \
-        --prefix=${HOST_SYSROOT} \
-        --target=${TARGET} \
-        2>&1 | tee configure.log
-    ;;
-second)
-    CC=${TARGET}-gcc \
-    AR=${TARGET}-ar \
-    RANLIB=${TARGET}-ranlib \
-    ${SOURCES}/${PACKAGE}/configure \
-        --prefix=${HOST_SYSROOT} \
-        --host=${TARGET} \
-        --disable-nls \
-        --disable-werror \
-        --with-lib-path=/lib \
-        --with-sysroot \
-        2>&1 | tee configure.log
-    ;;
-*)
-    echo Usage: $0 first, second or third
-    exit -1
-esac
+${SOURCES}/${PACKAGE}/configure \
+    --prefix=${HOST_SYSROOT} \
+    --target=${TARGET} \
+    --with-sysroot=${HOST_SYSROOT}/${TARGET} \
+    --with-lib-path=lib \
+    --disable-nls \
+    --disable-static \
+    --disable-multilib \
+    --disable-werror \
+    2>&1 | tee configure.log
 
 # make
 make 2>&1 | tee make.log

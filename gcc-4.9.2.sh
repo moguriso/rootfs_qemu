@@ -20,7 +20,7 @@ tarball=${PACKAGE}.tar.gz
 
 # download
 if [ ! -e ${DOWNLOADS}/${tarball} ]; then
-    wget -nc http://ftpmirror.gnu.org/gcc/${PACKAGE}/${tarball} -P ${DOWNLOADS}
+    wget -nc http://ftpmirror.gnu.org/${PN}/${PACKAGE}/${tarball} -P ${DOWNLOADS}
 fi
 
 # extract
@@ -67,7 +67,7 @@ second)
         --disable-nls \
         --disable-libstdcxx-threads \
         --disable-libstdcxx-pch \
-        --with-gxx-include-dir=/${HOST_SYSROOT}/${TARGET}/include/c++/${VERSION} \
+        --with-gxx-include-dir=/${HOST_SYSROOT}/${TARGET}/include/c++/${V} \
         2>&1 | tee configure.log
     ;;
 third)

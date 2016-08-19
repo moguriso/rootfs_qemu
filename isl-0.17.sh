@@ -12,7 +12,7 @@ tarball=${PACKAGE}.tar.xz
 
 # download
 if [ ! -e ${DOWNLOADS}/${tarball} ]; then
-    wget -nc http://ftpmirror.gnu.org/${PN}/${tarball} -P ${DOWNLOADS}
+    wget -nc http://isl.gforge.inria.fr/${tarball} -P ${DOWNLOADS}
 fi
 
 # extract
@@ -27,14 +27,8 @@ pushd $_
 # configure
 ${SOURCES}/${PACKAGE}/configure \
     --prefix=${HOST_SYSROOT}/${TARGET} \
-    --host=${TARGET} \
-    --build=${MACHTYPE} \
-    --disable-profile \
-    --enable-kernel=3.18.1 \
-    --with-headers=${HOST_SYSROOT}/${TARGET}/include \
-    libc_cv_forced_unwind=yes \
-    libc_cv_ctors_header=yes \
-    libc_cv_c_cleanup=yes
+    --disable-static \
+    --with-gmp=${HOST_SYSROOT}/${TARGET} \
     2>&1 | tee configure.log
 
 # make

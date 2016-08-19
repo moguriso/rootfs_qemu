@@ -64,7 +64,8 @@ kernel)
     make ARCH=${ARCH} CROSS_COMPILE=${TARGET}- 2>&1 | tee make.log
 
     # install
-    make ARCH=${ARCH} CROSS_COMPILE=${TARGET}- INSTALL_MOD_PATH=${TARGET_SYSROOT} modules_install 2>&1 | tee install.log
+    make ARCH=${ARCH} CROSS_COMPILE=${TARGET}- INSTALL_MOD_PATH=${TARGET_SYSROOT} modules_install 2>&1 | tee modules_install.log
+    make ARCH=${ARCH} CROSS_COMPILE=${TARGET}- INSTALL_MOD_PATH=${TARGET_SYSROOT} firmware_install 2>&1 | tee firmware_install.log
     ;;
 esac
 

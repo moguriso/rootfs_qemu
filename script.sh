@@ -9,10 +9,20 @@ for dir in ${DOWNLOADS} ${SOURCES} ${HOST_BUILD} ${TARGET_BUILD} ${HOST_SYSROOT}
     mkdir -p $dir
 done
 case $(uname -m) in
-  x86_64) mkdir -v ${HOST_SYSROOT}/lib && ln -sv lib ${HOST_SYSROOT}/lib64 ;;
+  x86_64) ln -sv lib ${HOST_SYSROOT}/lib64 ;;
 esac
 
-./binutils-2.25.sh first
+./binutils-2.25.sh
+
+./gmp-6.1.1.sh
+
+./mpfr-3.1.4.sh
+
+./mpc-1.0.3.sh
+
+./isl-0.17.sh
+
+./cloog-0.18.4.sh
 
 ./gcc-4.9.2.sh first
 
@@ -21,8 +31,6 @@ esac
 ./glibc-2.20.sh
 
 ./gcc-4.9.2.sh second
-
-#./binutils-2.25.sh second
 
 ./gcc-4.9.2.sh third
 
@@ -35,6 +43,8 @@ esac
 ./busybox-1.22.1.sh
 
 ./linux-3.18.1.sh kernel
+
+./test-0.1.sh
 
 ./mkrootfs.sh
 
