@@ -16,6 +16,7 @@ PACKAGE=${PACKAGE%.*}
 PN=${PACKAGE%-*}
 V=${PACKAGE##*-}
 MAJOR=${V%%\.*}
+NPROC=`nproc`
 
 tarball=${PACKAGE}.tar.xz
 
@@ -61,7 +62,7 @@ kernel)
 #    make ARCH=${ARCH} CROSS_COMPILE=${TARGET}- menuconfig
 
     # make
-    make ARCH=${ARCH} CROSS_COMPILE=${TARGET}- 2>&1 | tee make.log
+    make ARCH=${ARCH} -j${NPROC} CROSS_COMPILE=${TARGET}- 2>&1 | tee make.log
 
     # install
     make ARCH=${ARCH} CROSS_COMPILE=${TARGET}- INSTALL_MOD_PATH=${TARGET_SYSROOT} modules_install 2>&1 | tee modules_install.log
