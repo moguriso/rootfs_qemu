@@ -58,7 +58,6 @@ first)
         2>&1 | tee configure.log
     ;;
 second)
-# configure
     ${SOURCES}/${PACKAGE}/libstdc++-v3/configure \
         --target=${TARGET} \
         --prefix=${HOST_SYSROOT}/${TARGET} \

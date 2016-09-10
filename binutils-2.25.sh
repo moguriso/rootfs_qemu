@@ -28,7 +28,6 @@ pushd $_
 ${SOURCES}/${PACKAGE}/configure \
     --prefix=${HOST_SYSROOT} \
     --target=${TARGET} \
-    --with-sysroot=${HOST_SYSROOT}/${TARGET} \
     --with-lib-path=lib \
     --disable-nls \
     --disable-static \

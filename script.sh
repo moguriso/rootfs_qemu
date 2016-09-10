@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# http://tanehp.ec-net.jp/heppoko-lab/prog/qemu_arm/qemu-arm.html
-
 set -e
 source ./filetree.env
 
@@ -9,7 +7,7 @@ for dir in ${DOWNLOADS} ${SOURCES} ${HOST_BUILD} ${TARGET_BUILD} ${HOST_SYSROOT}
     mkdir -p $dir
 done
 case $(uname -m) in
-  x86_64) ln -sv lib ${HOST_SYSROOT}/lib64 ;;
+  x86_64) ln -sfn lib ${HOST_SYSROOT}/lib64 ;;
 esac
 
 ./binutils-2.25.sh

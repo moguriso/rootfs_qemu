@@ -14,8 +14,8 @@ popd
 
 pushd ${TARGET_SYSROOT}
 
-find . | cpio -o --format=newc --owner=root:root > ${IMAGES}/initrd
-gzip -c ${IMAGES}/initrd > ${IMAGES}/initrd.gz
+find . | cpio -o --format=newc --owner=root:root > ${IMAGES}/initramfs
+gzip -c ${IMAGES}/initramfs > ${IMAGES}/initramfs.gz
 
 popd
 
